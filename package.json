@@ -1,0 +1,40 @@
+{
+  "name": "micro-route",
+  "version": "0.1.0",
+  "description": "Tiny http routing helper",
+  "dependencies": {
+    "url-pattern": "^1.0.3"
+  },
+  "devDependencies": {
+    "ava": "^0.17.0",
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.4.0",
+    "eslint-config-standard": "^6.0.0",
+    "eslint-plugin-babel": "^4.0.0",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^2.0.0"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": ">=6.2.0"
+  },
+  "scripts": {
+    "test": "eslint . && ava test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dotcypress/micro-route.git"
+  },
+  "keywords": [
+    "micro",
+    "routing",
+    "route",
+    "match"
+  ],
+  "author": "Vitaly Domnikov <dotcypress@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dotcypress/micro-route/issues"
+  },
+  "homepage": "https://github.com/dotcypress/micro-route#readme"
+}

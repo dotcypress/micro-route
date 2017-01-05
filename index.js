@@ -1,22 +1,16 @@
 const UrlPattern = require('url-pattern')
 const { parse } = require('url')
 
-class MicroRoute {
-  constructor (methods, pattern = '*') {
-    if (methods && methods !== '*') {
-      this.methods = Array.isArray(methods)
-        ? methods
-        : methods.split(',')
-    }
-    this.pattern = new UrlPattern(pattern)
-  }
+module.exports = (pattern = '*', methods = '*') => {
+  const urlPattern = new UrlPattern(pattern)
+  const alloweMethods = methods === '*'
+    ? null
+    : Array.isArray(methods) ? methods : methods.split(',')
 
-  match (req) {
-    if (this.methods && !this.methods.includes(req.method)) {
+  return (req) => {
+    if (alloweMethods && !alloweMethods.includes(req.method)) {
       return null
     }
-    return this.pattern.match(parse(req.url).pathname)
+    return urlPattern.match(parse(req.url).pathname)
   }
 }
-
-module.exports = MicroRoute

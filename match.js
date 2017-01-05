@@ -1,7 +1,3 @@
-const MicroRoute = require('./')
+const route = require('./')
 
-function match (req, pattern, methods) {
-  return new MicroRoute(methods, pattern).match(req)
-}
-
-module.exports = match
+module.exports = (req, pattern, methods) => route(pattern, methods)(req)

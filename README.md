@@ -4,7 +4,7 @@
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
 
 # micro-route
->  🎛 Tiny http routing helper
+>  🎛 Tiny http routing helper based on [`url-pattern`](https://github.com/snd/url-pattern)
 
 ## Installation
 
@@ -17,31 +17,31 @@ $ npm install micro-route --save
 ## Examples
 
 ```js
+const route = require('micro-route')
+
+const corsRoute = route('*', 'OPTIONS')
+const fooRoute = route('/', ['POST', 'PUT'])
+const barRoute = route('/api/collection/:id', 'DELETE')
+const anotherRoute = route('/api/transactions/:id')
+
+module.exports = function (req, res) {
+  if (corsRoute(req)) {
+    // Send CORS headers 
+  } else if (fooRoute(req)) {
+    // Do cool stuff
+  } else if (barRoute(req)) {
+    // Do another cool stuff
+  } else if (anotherRoute(req)) {
+    // Same here
+  }
+}
+```
+
+```js
 const match = require('micro-route/match')
 
 module.exports = function (req, res) {
   const { id } = match(req, '/api/transactions/:id')
   console.log('Transaction id:', id)  
-}
-```
-
-```js
-const MicroRoute = require('micro-route')
-
-const corsRoute = new MicroRoute('OPTIONS')
-const fooRoute = new MicroRoute(['POST', 'PUT'], '/')
-const barRoute = new MicroRoute('DELETE', '/api/collection/:id')
-const anotherRoute = new MicroRoute('*', 'api/transactions/:id')
-
-module.exports = function (req, res) {
-  if (corsRoute.match(req)) {
-    // Send CORS headers 
-  } else if (fooRoute.match(req)) {
-    // Do cool stuff
-  } else if (barRoute.match(req)) {
-    // Do another cool stuff
-  } else if (anotherRoute.match(req)) {
-    // Same here
-  } 
 }
 ```

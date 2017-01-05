@@ -1,6 +1,6 @@
 {
   "name": "micro-route",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Tiny http routing helper",
   "dependencies": {
     "url-pattern": "^1.0.3"

@@ -50,7 +50,7 @@ test('match with methods', (t) => {
 })
 
 test('match with query', (t) => {
-  const result = match(fakeRequest('/foo/42/test/1?foo=bar'), '/foo/:bar/test/:foo')
+  const result = match(fakeRequest('/foo/42/test/1?foo=bar'), '/foo/:bar/test/:foo', '*', true)
   t.is(result.params.bar, '42')
   t.is(result.params.foo, '1')
   t.is(result.query.foo, 'bar')

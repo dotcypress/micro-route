@@ -41,7 +41,7 @@ module.exports = function (req, res) {
 const match = require('micro-route/match')
 
 module.exports = function (req, res) {
-  const { params, query } = match(req, '/api/transactions/:id?ts=12')
+  const { params, query } = match(req, '/api/transactions/:id?ts=12', true)
   console.log('Transaction id:', params.id)  
   console.log('ts:', query.ts)  
 }

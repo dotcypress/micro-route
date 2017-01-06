@@ -1,3 +1,3 @@
 const route = require('./')
 
-module.exports = (req, pattern, methods) => route(pattern, methods)(req)
+module.exports = (req, pattern, methods, parseQuery) => route(pattern, methods, parseQuery)(req)

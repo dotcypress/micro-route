@@ -29,10 +29,6 @@ module.exports = function (req, res) {
     // Send CORS headers 
   } else if (fooRoute(req)) {
     // Do cool stuff
-  } else if (barRoute(req)) {
-    // Do another cool stuff
-  } else if (anotherRoute(req)) {
-    // Same here
   }
 }
 ```
@@ -45,4 +41,14 @@ module.exports = function (req, res) {
   console.log('Transaction id:', params.id)  
   console.log('ts:', query.ts)  
 }
+```
+
+```js
+const dispatch = require('micro-route/dispatch')
+
+module.exports = dispatch()
+  .dispatch('*', 'OPTIONS', (req, res) => ... )
+  .dispatch('/', ['POST', 'PUT'], (req, res) => ... )
+  .dispatch('/api/collection/:id', 'DELETE', (req, res) => ... )
+  .dispatch('/api/transactions/:id', '*', (req, res, { params, query }) => ... )
 ```

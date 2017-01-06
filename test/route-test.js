@@ -1,5 +1,6 @@
 const { test } = require('ava')
 const match = require('../match')
+const dispatch = require('../dispatch')
 
 function fakeRequest (url, method = 'GET') {
   return {
@@ -7,6 +8,31 @@ function fakeRequest (url, method = 'GET') {
     url: url
   }
 }
+
+test('dispatch', (t) => {
+  const cb = dispatch()
+  .dispatch('/bar/:foo', '*', () => t.fail())
+  .dispatch('/foo/:bar/test/:foo', 'POST', () => t.fail())
+  .dispatch('/foo/:bar/test/:foo', 'DELETE', () => t.fail())
+  .dispatch('/foo/:bar/test/:foo', '*', (req, res, { params, query }) => {
+    t.is(params.bar, '42')
+    t.is(params.foo, '1')
+    t.is(query.foo, 'bar')
+  })
+  cb(fakeRequest('/foo/42/test/1?foo=bar'))
+})
+
+test('dispatch 2', (t) => {
+  const cb = dispatch()
+    .dispatch('/foo/:bar/test/:foo', 'POST', () => t.fail())
+    .dispatch('/foo/:bar/test/:foo', 'DELETE', () => t.fail())
+    .dispatch('/foo/:bar/test/:foo', '*', (req, res, { params, query }) => {
+      t.is(params.bar, '42')
+      t.is(params.foo, '1')
+      t.is(query.foo, 'bar')
+    })
+  cb(fakeRequest('/foo/42/test/1?foo=bar'))
+})
 
 test('* match', (t) => {
   if (!match(fakeRequest('/foo/42'))) {

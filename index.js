@@ -11,8 +11,8 @@ module.exports = (pattern = '*', methods = '*', parseQuery) => {
     if (alloweMethods && !alloweMethods.includes(req.method)) {
       return null
     }
-    const url = parse(req.url, parseQuery)
-    const params = urlPattern.match(url.pathname)
-    return params && { params, query: url.query }
+    const { pathname, query } = parse(req.url, parseQuery)
+    const params = urlPattern.match(pathname)
+    return params && { params, query }
   }
 }

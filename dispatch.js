@@ -1,6 +1,6 @@
 const microRoute = require('./')
 
-function dispatch (actions, pattern, methods, handler) {
+const dispatch = (actions, pattern, methods, handler) => {
   if (handler) {
     actions.push({
       handler,

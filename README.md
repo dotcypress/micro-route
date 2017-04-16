@@ -51,4 +51,5 @@ module.exports = dispatch()
   .dispatch('/', ['POST', 'PUT'], (req, res) => ... )
   .dispatch('/api/collection/:id', 'DELETE', (req, res) => ... )
   .dispatch('/api/transactions/:id', '*', (req, res, { params, query }) => ... )
+  .otherwise((req, res) => ... )
 ```

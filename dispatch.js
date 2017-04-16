@@ -11,11 +11,15 @@ const dispatch = (actions, pattern, methods, handler) => {
     for (const { route, handler } of actions) {
       const match = route(req)
       if (match) {
-        return handler(req, res, match)
+        const payload = match.pattern !== '*'
+          ? { params: match.params, query: match.query }
+          : undefined
+        return handler(req, res, payload)
       }
     }
   }
   serverCallback.dispatch = (...args) => dispatch(actions, ...args)
+  serverCallback.otherwise = (cb) => dispatch(actions, '*', '*', cb)
   return serverCallback
 }
 

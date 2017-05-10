@@ -38,12 +38,14 @@ test('* match', (t) => {
   if (!match(fakeRequest('/foo/42'))) {
     t.fail()
   }
+  t.pass()
 })
 
 test('* match with method', (t) => {
   if (!match(fakeRequest('/foo/42', 'OPTIONS'), undefined, 'OPTIONS')) {
     t.fail()
   }
+  t.pass()
 })
 
 test('simple match', (t) => {
@@ -51,10 +53,16 @@ test('simple match', (t) => {
   t.is(result.params.bar, '42')
 })
 
-test('advanced match', (t) => {
-  const result = match(fakeRequest('/foo/42/test/1'), '/foo/:bar/test/:foo')
+test('unicode params match', (t) => {
+  const result = match(fakeRequest('/foo/42/test/' + encodeURIComponent(' ф ')), '/foo/:bar/test/:foo')
   t.is(result.params.bar, '42')
-  t.is(result.params.foo, '1')
+  t.is(result.params.foo, ' ф ')
+})
+
+test('unicode query match', (t) => {
+  const result = match(fakeRequest('/foo/42/test?foo=' + encodeURIComponent(' ф ')), '/foo/:bar/test', '*', true)
+  t.is(result.params.bar, '42')
+  t.is(result.query.foo, ' ф ')
 })
 
 test('match with method', (t) => {
@@ -86,4 +94,5 @@ test('invalid match', (t) => {
   if (match(fakeRequest('/bar/42'), '/foo/:bar')) {
     t.fail()
   }
+  t.pass()
 })

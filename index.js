@@ -12,6 +12,9 @@ module.exports = (pattern = '*', methods = '*', parseQuery) => {
     }
     const { pathname, query } = parse(req.url, parseQuery)
     const params = urlPattern.match(pathname)
+    if (params) {
+      Object.keys(params).forEach((key) => (params[key] = decodeURIComponent(params[key])))
+    }
     return params && { params, query, pattern, methods }
   }
 }

@@ -1,10 +1,10 @@
 const microRoute = require('./')
 
-const dispatch = (actions, pattern, methods, handler) => {
+const dispatch = (actions, pattern, methods, handler, patternOpts) => {
   if (handler) {
     actions.push({
       handler,
-      route: microRoute(pattern, methods, true)
+      route: microRoute(pattern, methods, true, patternOpts)
     })
   }
   const serverCallback = (req, res) => {
@@ -23,4 +23,4 @@ const dispatch = (actions, pattern, methods, handler) => {
   return serverCallback
 }
 
-module.exports = (pattern, methods, handler) => dispatch([], pattern, methods, handler)
+module.exports = (pattern, methods, handler, patternOpts) => dispatch([], pattern, methods, handler, patternOpts)

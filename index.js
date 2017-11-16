@@ -1,8 +1,8 @@
 const UrlPattern = require('url-pattern')
 const { parse } = require('url')
 
-module.exports = (pattern = '*', methods = '*', parseQuery) => {
-  const urlPattern = new UrlPattern(pattern)
+module.exports = (pattern = '*', methods = '*', parseQuery, patternOpts) => {
+  const urlPattern = new UrlPattern(pattern, patternOpts)
   const alloweMethods = methods !== '*'
     ? Array.isArray(methods) ? methods : methods.split(',')
     : null

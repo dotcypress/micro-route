@@ -96,3 +96,23 @@ test('invalid match', (t) => {
   }
   t.pass()
 })
+
+test('match exposes patternOpts', (t) => {
+  const result = match(fakeRequest('/foo/42'), '/foo/$bar', '*', false, { segmentNameStartChar: '$' })
+  t.is(result.params.bar, '42')
+})
+
+test('dispatch exposes patternOpts', (t) => {
+  const patternOpts = { segmentNameStartChar: '$' }
+  const cb = dispatch()
+  .dispatch('/bar/$foo', '*', () => t.fail(), patternOpts)
+  .dispatch('/foo/$bar/test/$foo', 'POST', () => t.fail(), patternOpts)
+  .dispatch('/foo/$bar/test/$foo', 'DELETE', () => t.fail(), patternOpts)
+  .dispatch('/foo/$bar/test/$foo', '*', (req, res, { params, query }) => {
+    t.is(params.bar, '42')
+    t.is(params.foo, '1')
+    t.is(query.foo, 'bar')
+  }, patternOpts)
+  .otherwise(() => t.fail())
+  cb(fakeRequest('/foo/42/test/1?foo=bar'))
+})

@@ -11,14 +11,14 @@ function fakeRequest (url, method = 'GET') {
 
 test('dispatch', (t) => {
   const cb = dispatch()
-  .dispatch('/bar/:foo', '*', () => t.fail())
-  .dispatch('/foo/:bar/test/:foo', 'POST', () => t.fail())
-  .dispatch('/foo/:bar/test/:foo', 'DELETE', () => t.fail())
-  .dispatch('/foo/:bar/test/:foo', '*', (req, res, { params, query }) => {
-    t.is(params.bar, '42')
-    t.is(params.foo, '1')
-    t.is(query.foo, 'bar')
-  })
+    .dispatch('/bar/:foo', '*', () => t.fail())
+    .dispatch('/foo/:bar/test/:foo', 'POST', () => t.fail())
+    .dispatch('/foo/:bar/test/:foo', 'DELETE', () => t.fail())
+    .dispatch('/foo/:bar/test/:foo', '*', (req, res, { params, query }) => {
+      t.is(params.bar, '42')
+      t.is(params.foo, '1')
+      t.is(query.foo, 'bar')
+    })
   cb(fakeRequest('/foo/42/test/1?foo=bar'))
 })
 
@@ -105,14 +105,14 @@ test('match exposes patternOpts', (t) => {
 test('dispatch exposes patternOpts', (t) => {
   const patternOpts = { segmentNameStartChar: '$' }
   const cb = dispatch()
-  .dispatch('/bar/$foo', '*', () => t.fail(), patternOpts)
-  .dispatch('/foo/$bar/test/$foo', 'POST', () => t.fail(), patternOpts)
-  .dispatch('/foo/$bar/test/$foo', 'DELETE', () => t.fail(), patternOpts)
-  .dispatch('/foo/$bar/test/$foo', '*', (req, res, { params, query }) => {
-    t.is(params.bar, '42')
-    t.is(params.foo, '1')
-    t.is(query.foo, 'bar')
-  }, patternOpts)
-  .otherwise(() => t.fail())
+    .dispatch('/bar/$foo', '*', () => t.fail(), patternOpts)
+    .dispatch('/foo/$bar/test/$foo', 'POST', () => t.fail(), patternOpts)
+    .dispatch('/foo/$bar/test/$foo', 'DELETE', () => t.fail(), patternOpts)
+    .dispatch('/foo/$bar/test/$foo', '*', (req, res, { params, query }) => {
+      t.is(params.bar, '42')
+      t.is(params.foo, '1')
+      t.is(query.foo, 'bar')
+    }, patternOpts)
+    .otherwise(() => t.fail())
   cb(fakeRequest('/foo/42/test/1?foo=bar'))
 })
